@@ -1,0 +1,359 @@
+/* Bulk workspace — dark, to match the single-image editor. */
+
+.workspace {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  background: #14161b;
+  padding: 72px 24px 104px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-content: start;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #9a9aa5;
+  padding: 4rem 0;
+  font-size: 1.4rem;
+}
+
+.card {
+  background: #1e1e25;
+  border: 1px solid #2a2a33;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.thumb-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #0f1013
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2"><path d="M1 2V0h1v1H0v1z" fill-opacity=".06" fill="white"/></svg>');
+  background-size: 18px 18px;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.pending {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.45);
+
+  & > loading-spinner {
+    --color: #fff;
+  }
+}
+
+.card-actions {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.15s ease;
+}
+.card-actions:hover {
+  opacity: 1;
+}
+
+.icon-btn {
+  composes: unbutton from global;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: var(--accent);
+  }
+
+  svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+}
+
+.meta {
+  padding: 10px 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.file-name {
+  color: #e3e3e8;
+  font-size: 1.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.size-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.1rem;
+  color: #9a9aa5;
+  flex-wrap: wrap;
+}
+
+.size-row-muted {
+  font-size: 1.1rem;
+  color: #85858f;
+}
+
+.size-orig {
+  color: #85858f;
+}
+.arrow {
+  color: #56606b;
+}
+.size-comp {
+  color: #e3e3e8;
+  font-weight: 600;
+}
+
+.badge-saved,
+.badge-grown {
+  margin-left: auto;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.badge-saved {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.14);
+}
+.badge-grown {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.14);
+}
+
+/* ---- Summary / action bar ------------------------------------------------ */
+
+.summary-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  padding: 12px 20px;
+  background: #191920;
+  border-top: 1px solid #2a2a33;
+}
+
+.settings-toggle {
+  composes: unbutton from global;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  border: 1px solid #2a2a33;
+  background: #1e1e25;
+  color: #e3e3e8;
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+
+  &:hover {
+    border-color: var(--accent);
+    color: #fff;
+  }
+  svg {
+    color: #17c3d4;
+  }
+}
+
+.summary-stats {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  color: #cacad3;
+  font-size: 1.2rem;
+  margin-right: auto;
+}
+
+.summary-done {
+  font-weight: 600;
+  color: #e3e3e8;
+}
+
+.summary-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #9a9aa5;
+}
+
+.summary-badge {
+  color: #34d399;
+  font-weight: 700;
+}
+
+.download-all-btn {
+  composes: unbutton from global;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 9px;
+  background: var(--grad-tech);
+  color: #fff;
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s, opacity 0.15s;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+    filter: grayscale(0.4);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+  }
+  loading-spinner {
+    --color: #fff;
+    --size: 20px;
+  }
+}
+
+/* ---- Settings panel (reuses <Options onlyConfig>) ------------------------ */
+
+.settings-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 56px;
+  z-index: 130;
+  width: min(360px, 100vw);
+  display: flex;
+  flex-direction: column;
+  background: #16161a;
+  border-left: 1px solid #2a2a33;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.4);
+  animation: slide-in 0.2s ease;
+
+  /* Theme variables the <Options> subtree expects. */
+  --options-radius: 7px;
+  --main-theme-color: var(--accent);
+  --hot-theme-color: var(--accent-strong);
+  --header-text-color: #fff;
+  --scroller-radius: 0;
+  --rotate-copyoverbutton-angle: 0deg;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+.settings-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #2a2a33;
+  color: #f0f0f4;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.settings-close {
+  composes: unbutton from global;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  color: #cacad3;
+  cursor: pointer;
+
+  &:hover {
+    background: #2a2a33;
+    color: #fff;
+  }
+}
+
+.settings-body {
+  flex: 1;
+  overflow: auto;
+  padding: 8px 12px 16px;
+  color: #fff;
+}
+
+/* ---- Back button (kept) -------------------------------------------------- */
+
+.back {
+  composes: unbutton from global;
+  position: absolute;
+  z-index: 140;
+  top: 16px;
+  left: 16px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #1e1e25;
+  border: 1px solid #2a2a33;
+  color: #e3e3e8;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+
+  &:hover,
+  &:focus {
+    background: #2a2a33;
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  & > svg {
+    width: 22px;
+    height: 22px;
+  }
+}
