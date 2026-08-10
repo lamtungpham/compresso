@@ -6,7 +6,8 @@
       "source": "/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache" },
-        { "key": "Content-Security-Policy", "value": "frame-ancestors 'self' https://tungpham.vn https://www.tungpham.vn http://localhost:*;" }
+        { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" },
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" }
       ]
     }
   ],
